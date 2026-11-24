@@ -3,22 +3,18 @@
 
 import re
 import matplotlib.pyplot as plt
+from intensite import rep
 
-spc = open("Spc_photo.txt")
-inter1=input("Rentrer une longueur d'onde minimum : ")
-inter2=input("Rentrer une longueur d'onde minimum : ")
-longueur_onde=[]
-intensite=[]
-nb = re.compile(r"^(\d+\.\d+)\s+(-?\d+\.\d)")
+interv1=int(input("Borne inférieur : "))
 
-for ligne in spc:
-    x = nb.match(ligne)
-    if x:
-        if x.group(1) >= inter1 and x.group(1)<= inter2:
-            lo = float(x.group(1))
-            inte = float(x.group(2))
-            longueur_onde.append(lo)
-            intensite.append(inte)
+donnees = [] #liste pour récupérer les données qui nous intérresse
+donnees = rep[interv1, interv1+10]
+print(donnees[2:10]) 
+
+intensite=donnees[0]
+longueur_onde=donnees[1]
+
+#print(longueur_onde)
 
 plt.plot(longueur_onde, intensite)
 plt.show()
