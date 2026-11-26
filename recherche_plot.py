@@ -5,6 +5,8 @@ import re
 import matplotlib.pyplot as plt
 from intensite import rep
 
+
+
 interv1=int(input("Borne inférieur : "))
 
 donnees = [] #liste pour récupérer les données qui nous intérresse

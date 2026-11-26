@@ -1,21 +1,42 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import re, subprocess, sys
+import re, subprocess, sys, os
 import matplotlib.pyplot as plt
 
+repo = os.getcwd() # Vérification de présence du fichier txt
+liste_fichier = os.listdir(repo)
+if "Spc_photo.txt" not in liste_fichier:
+    raise FileNotFoundError("Il manque le fichier txt")
+
+if len(sys.argv)>1:  # Vérif de présence de l'argument
+    inter=int(sys.argv[1])
+else:
+    inter=10
+
+
 rep = {}
-inter=10
-#inter = int(sys.argv[1])
-mini = 339
-maxi = 339+inter
-spc = open("Spc_photo.txt")
+spc=open('Spc_photo.txt')
 inte=[]
 long=[]
 inte_t=[]
 long_t=[]
 i=0
-nb = re.compile(r"^(\d+\.\d+)\s+(-?\d+\.\d)")
+nb = re.compile(r"^(\d+\.\d+)\s+(-?\d+\.\d)") # recherche de motif "nombre.nombre nombre.nombre"
+
+mini = None
+
+for ligne in spc:  # Calcul de la borne minimum
+    x = nb.match(ligne)
+    if x:
+        mini = int(float(x.group(1)))
+        break
+
+if mini is None:
+    raise ValueError("Aucune valeur numérique trouvée")
+
+spc.seek(0) #replace la lecture au début
+maxi = mini + inter
 
 for ligne in spc:
     x = nb.match(ligne)
