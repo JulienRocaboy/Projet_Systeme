@@ -40,7 +40,7 @@ maxi = mini + inter
 
 for ligne in spc:
     x = nb.match(ligne)
-    if x:
+    if x :
         longueur_onde = float(x.group(1))
         intensite = float(x.group(2))
         if longueur_onde<maxi:
@@ -50,7 +50,7 @@ for ligne in spc:
             inte_t.append(intensite)
             long_t.append(longueur_onde)
         else:
-            rep[mini,maxi] = inte,long,"Nombre d'intensité : ",i,"Intensité min : ",min(inte),"Intensité moyenne : ",sum(inte)/len(inte),"Intensité max", max(inte)
+            rep[mini,maxi] = inte,long,i,min(inte),sum(inte)/len(inte),max(inte)
             i=1
             mini += 10
             maxi += 10
@@ -58,8 +58,16 @@ for ligne in spc:
             long=[]
             inte.append(intensite)
             long.append(longueur_onde)
+    if len(inte)>1 and not x: # Pour la fin des valeurs
+            rep[mini,maxi] = inte,long,i,min(inte),sum(inte)/len(inte),max(inte)
+            inte.append(intensite)
+            long.append(longueur_onde)
 
 if __name__ == "__main__":    #empeche de ploter deux fois
     plt.plot(long_t, inte_t)
+    plt.ylabel('Intensité')
+    plt.xlabel("Longueur d'onde")
+    plt.grid('both')
     plt.show()
+
     print(rep.keys())
